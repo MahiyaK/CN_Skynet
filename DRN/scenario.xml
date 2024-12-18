@@ -1,0 +1,17 @@
+<scenario> <!-- NODE FAILURE to Simulate random node shutdowns or crashes to mimic damaged infrastructure -->
+    <!-- Failure of hostR1 at time t=20s -->
+    <at t="20">
+        <set-param module="hostR1.wlan[0].radio" par="disabled" value="true"/>
+        <set-param module="hostR1.app[0]" par="startTime" value="999s"/> <!-- Stops application -->
+    </at>
+    <!-- Failure of hostR2 at time t=40s -->
+    <at t="40">
+        <set-param module="hostR2.wlan[0].radio" par="disabled" value="true"/>
+        <set-param module="hostR2.app[0]" par="startTime" value="999s"/>
+    </at>
+    <!-- Recovery of hostR1 at time t=60s -->
+    <at t="60">
+        <set-param module="hostR1.wlan[0].radio" par="disabled" value="false"/>
+        <set-param module="hostR1.app[0]" par="startTime" value="0s"/> <!-- Restarts application -->
+    </at>
+</scenario>

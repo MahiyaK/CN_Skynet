@@ -1,0 +1,1621 @@
+version 3
+run Wireless12-0-20241217-21:33:17-14416
+attr configname Wireless12
+attr datetime 20241217-21:33:17
+attr datetimef 20241217-213317
+attr experiment Wireless12
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsd ""
+attr iterationvarsf ""
+attr measurement ""
+attr network WirelessB
+attr processid 14416
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+config image-path ../inet4.5/images
+config description "Changing to a more realistic radio model"
+config extends Wireless11
+config *.radioMedium.typename ApskScalarRadioMedium
+config *.radioMedium.backgroundNoise.power -90dBm
+config *.radioMedium.mediumLimitCache.centerFrequency 2GHz
+config *.host*.wlan[0].radio.typename ApskScalarRadio
+config *.host*.wlan[0].radio.centerFrequency 2GHz
+config *.host*.wlan[0].radio.bandwidth 2MHz
+config *.host*.wlan[0].radio.transmitter.power 1.4mW
+config *.host*.wlan[0].radio.transmitter.preambleDuration 10us
+config *.host*.wlan[0].radio.transmitter.headerLength 8B
+config *.host*.wlan[0].radio.receiver.sensitivity -85dBm
+config *.host*.wlan[0].radio.receiver.energyDetection -85dBm
+config *.host*.wlan[0].radio.receiver.snirThreshold 4dB
+config *.hostR1.wlan[*].radio.bitErrorRate.result-recording-modes default,+vector
+config description "Adding obstacles to the environment"
+config extends Wireless10
+config *.host*.mobility.initialZ 1.7m
+config *.physicalEnvironment.config "xmldoc(\"walls.xml\")"
+config *.radioMedium.obstacleLoss.typename IdealObstacleLoss
+config description "Configuring ad-hoc routing (AODV)"
+config extends Wireless09
+config *.configurator.addStaticRoutes false
+config *.host*.typename AodvRouter
+config *.hostB.wlan[0].radio.displayCommunicationRange true
+config *.visualizer.dataLinkVisualizer.packetFilter "\"AODV*\""
+config description "Configuring node movements"
+config extends Wireless08
+config *.hostR1.mobility.typename LinearMobility
+config *.hostR1.mobility.speed 12mps
+config *.hostR1.mobility.initialMovementHeading 270deg
+config *.hostR2.mobility.typename LinearMobility
+config *.hostR2.mobility.speed 10mps
+config *.hostR2.mobility.initialMovementHeading 180deg
+config *.hostR3.mobility.typename LinearMobility
+config *.hostR3.mobility.speed 8mps
+config *.hostR3.mobility.initialMovementHeading 90deg
+config *.host*.wlan[0].queue.packetCapacity 50
+config *.host*.wlan[0].radio.transmitter.communicationRange 300m
+config *.host*.**.bitrate 15Mbps
+config *.host*.wlan[0].radio.receiver.ignoreInterference false
+config *.visualizer.mobilityVisualizer.displayVelocities true
+config *.visualizer.mobilityVisualizer.displayMovementTrails true
+config *.*.radioMedium.maxTransmissionDuration 10s
+config description "Modeling energy consumption"
+config extends Wireless07
+config *.host*.wlan[0].radio.energyConsumer.typename StateBasedEpEnergyConsumer
+config *.host*.wlan[0].radio.energyConsumer.offPowerConsumption 0mW
+config *.host*.wlan[0].radio.energyConsumer.sleepPowerConsumption 1mW
+config *.host*.wlan[0].radio.energyConsumer.switchingPowerConsumption 1mW
+config *.host*.wlan[0].radio.energyConsumer.receiverIdlePowerConsumption 2mW
+config *.host*.wlan[0].radio.energyConsumer.receiverBusyPowerConsumption 5mW
+config *.host*.wlan[0].radio.energyConsumer.receiverReceivingPowerConsumption 10mW
+config *.host*.wlan[0].radio.energyConsumer.transmitterIdlePowerConsumption 2mW
+config *.host*.wlan[0].radio.energyConsumer.transmitterTransmittingPowerConsumption 100mW
+config *.host*.energyStorage.typename IdealEpEnergyStorage
+config *.host*.wlan[0].radio.displayInterferenceRange false
+config *.hostR1.wlan[0].radio.displayCommunicationRange false
+config *.visualizer.mediumVisualizer.displaySignals false
+config description "Turning on ACKs in CSMA"
+config extends Wireless06
+config *.host*.wlan[0].mac.useAck true
+config description "Using CSMA to better utilize the medium"
+config extends Wireless05
+config *.host*.wlan[0].typename WirelessInterface
+config *.host*.wlan[0].radio.typename UnitDiskRadio
+config *.host*.wlan[0].mac.typename CsmaCaMac
+config *.host*.wlan[0].mac.ackTimeout 300us
+config *.host*.wlan[0].queue.typename DropTailQueue
+config *.host*.wlan[0].queue.packetCapacity -1
+config description "Taking interference into account"
+config extends Wireless04
+config *.host*.wlan[0].radio.receiver.ignoreInterference false
+config *.host*.wlan[0].radio.transmitter.interferenceRange 500m
+config *.hostA.wlan[0].radio.displayInterferenceRange true
+config *.visualizer.dataLinkVisualizer.packetFilter "\"\""
+config description "Setting up static routing"
+config extends Wireless03
+config *.host*.ipv4.routingTable.typename AodvRouting
+config *.host*.forwarding true
+config *.configurator.config "xml(\"<config><interface hosts='**' address='10.0.0.x' netmask='255.255.255.0'/><autoroute metric='errorRate'/></config>\")"
+config *.configurator.optimizeRoutes false
+config *.host*.ipv4.routingTable.netmaskRoutes "\"\""
+config *.visualizer.physicalLinkVisualizer.displayLinks true
+config *.visualizer.dataLinkVisualizer.displayLinks true
+config *.visualizer.networkRouteVisualizer.displayRoutes true
+config *.visualizer.networkRouteVisualizer.lineShift 0
+config *.visualizer.networkRouteVisualizer.packetFilter "\"UDPData*\""
+config *.visualizer.routingTableVisualizer.displayRoutingTables true
+config *.visualizer.routingTableVisualizer.labelFormat "\"\""
+config *.visualizer.routingTableVisualizer.lineShiftMode "\"none\""
+config *.visualizer.routingTableVisualizer.destinationFilter "\"*\""
+config *.visualizer.mediumVisualizer.displayCommunicationRanges true
+config description "WirelessB as standalone network"
+config network WirelessB
+config *.hostA.numApps 1
+config *.hostA.app[0].typename UdpBasicApp
+config *.hostA.app[0].destAddresses "\"hostB\""
+config *.hostA.app[0].destPort 5000
+config *.hostA.app[0].messageLength 500B
+config *.hostA.app[0].sendInterval exponential(12ms)
+config *.hostA.app[0].packetName "\"UDPData\""
+config *.hostB.numApps 1
+config *.hostB.app[0].typename UdpSink
+config *.hostB.app[0].localPort 5000
+config *.hostR1.numApps 0
+config *.host*.wlan[0].radio.transmitter.communicationRange 250m
+config *.hostR1.wlan[0].radio.displayCommunicationRange true
+config sim-time-limit 10s
+
+vector 0 WirelessB.hostA.wlan[0].queue queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
+attr title "queue length"
+attr unit pk
+vector 1 WirelessB.hostA.wlan[0].queue queueBitLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
+attr title "queue bit length"
+attr unit b
+vector 2 WirelessB.hostA.udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 3 WirelessB.hostA.udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 4 WirelessB.hostA.udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 5 WirelessB.hostB.wlan[0].queue queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
+attr title "queue length"
+attr unit pk
+vector 6 WirelessB.hostB.wlan[0].queue queueBitLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
+attr title "queue bit length"
+attr unit b
+vector 7 WirelessB.hostB.udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 8 WirelessB.hostB.udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 9 WirelessB.hostB.udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 10 WirelessB.hostR1.wlan[0].queue queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
+attr title "queue length"
+attr unit pk
+vector 11 WirelessB.hostR1.wlan[0].queue queueBitLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
+attr title "queue bit length"
+attr unit b
+vector 12 WirelessB.hostR1.udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 13 WirelessB.hostR1.udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 14 WirelessB.hostR1.udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 15 WirelessB.hostR2.wlan[0].queue queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
+attr title "queue length"
+attr unit pk
+vector 16 WirelessB.hostR2.wlan[0].queue queueBitLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
+attr title "queue bit length"
+attr unit b
+vector 17 WirelessB.hostR2.udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 18 WirelessB.hostR2.udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 19 WirelessB.hostR2.udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 20 WirelessB.hostR3.wlan[0].queue queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
+attr title "queue length"
+attr unit pk
+vector 21 WirelessB.hostR3.wlan[0].queue queueBitLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
+attr title "queue bit length"
+attr unit b
+vector 22 WirelessB.hostR3.udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 23 WirelessB.hostR3.udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 24 WirelessB.hostR3.udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 25 WirelessB.hostA.energyStorage powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 26 WirelessB.hostB.energyStorage powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 27 WirelessB.hostR1.energyStorage powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 28 WirelessB.hostR2.energyStorage powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 29 WirelessB.hostR3.energyStorage powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 30 WirelessB.hostA.wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioModeChanged
+attr title "Radio mode"
+vector 31 WirelessB.hostA.wlan[0].radio.energyConsumer powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 32 WirelessB.hostB.wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioModeChanged
+attr title "Radio mode"
+vector 33 WirelessB.hostB.wlan[0].radio.energyConsumer powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 34 WirelessB.hostR1.wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioModeChanged
+attr title "Radio mode"
+vector 35 WirelessB.hostR1.wlan[0].radio.energyConsumer powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 36 WirelessB.hostR2.wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioModeChanged
+attr title "Radio mode"
+vector 37 WirelessB.hostR2.wlan[0].radio.energyConsumer powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 38 WirelessB.hostR3.wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioModeChanged
+attr title "Radio mode"
+vector 39 WirelessB.hostR3.wlan[0].radio.energyConsumer powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 40 WirelessB.hostA.wlan[0].radio receptionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source receptionStateChanged
+attr title "Radio reception state"
+vector 41 WirelessB.hostB.wlan[0].radio receptionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source receptionStateChanged
+attr title "Radio reception state"
+vector 42 WirelessB.hostR1.wlan[0].radio receptionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source receptionStateChanged
+attr title "Radio reception state"
+vector 43 WirelessB.hostR2.wlan[0].radio receptionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source receptionStateChanged
+attr title "Radio reception state"
+vector 44 WirelessB.hostR3.wlan[0].radio receptionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source receptionStateChanged
+attr title "Radio reception state"
+vector 45 WirelessB.hostA.app[0] packetSent:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetSent
+attr title "packets sent, packetBytes"
+vector 46 WirelessB.hostA.udp packetSent:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetSent
+attr title "packets sent, packetBytes"
+vector 47 WirelessB.hostA.wlan[0].queue incomingPacketLengths:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source packetLength(packetPushStarted)
+attr title "incoming packet lengths"
+attr unit b
+vector 48 WirelessB.hostA.wlan[0].queue queueingTime:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source queueingTime(packetPulled)
+attr title "queueing times"
+attr unit s
+vector 49 WirelessB.hostA.wlan[0].queue outgoingPacketLengths:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source packetLength(packetPulled)
+attr title "outgoing packet lengths"
+attr unit b
+vector 50 WirelessB.hostA.energyStorage residualEnergyCapacity:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source residualEnergyCapacityChanged
+attr title "Residual energy capacity"
+attr unit J
+vector 51 WirelessB.hostA.wlan[0].radio transmissionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source transmissionStateChanged
+attr title "Radio transmission state"
+vector 52 WirelessB.hostR2.energyStorage residualEnergyCapacity:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source residualEnergyCapacityChanged
+attr title "Residual energy capacity"
+attr unit J
+vector 53 WirelessB.hostR2.wlan[0].mac packetDropIncorrectlyReceived:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packet drop: incorrectly received, packetBytes"
+vector 54 WirelessB.hostA.wlan[0].queue incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 55 WirelessB.hostA.wlan[0].queue outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	21	0.016558842123	0
+0	109	0.338864247199	0
+0	278	0.817326965167	0
+0	509	1.457830250372	0
+1	0	0	0
+1	0	0	0
+1	0	0	0
+1	0	0	0
+1	0	0	0
+1	21	0.016558842123	0
+1	109	0.338864247199	0
+1	278	0.817326965167	0
+1	509	1.457830250372	0
+2	0	0	0
+3	0	0	0
+4	0	0	0
+5	0	0	0
+5	0	0	0
+5	0	0	0
+5	0	0	0
+5	0	0	0
+6	0	0	0
+6	0	0	0
+6	0	0	0
+6	0	0	0
+6	0	0	0
+7	0	0	0
+8	0	0	0
+9	0	0	0
+10	0	0	0
+10	0	0	0
+10	0	0	0
+10	0	0	0
+10	0	0	0
+11	0	0	0
+11	0	0	0
+11	0	0	0
+11	0	0	0
+11	0	0	0
+12	0	0	0
+13	0	0	0
+14	0	0	0
+15	0	0	0
+15	0	0	0
+15	0	0	0
+15	0	0	0
+15	0	0	0
+16	0	0	0
+16	0	0	0
+16	0	0	0
+16	0	0	0
+16	0	0	0
+17	0	0	0
+18	0	0	0
+19	0	0	0
+20	0	0	0
+20	0	0	0
+20	0	0	0
+20	0	0	0
+20	0	0	0
+21	0	0	0
+21	0	0	0
+21	0	0	0
+21	0	0	0
+21	0	0	0
+22	0	0	0
+23	0	0	0
+24	0	0	0
+25	0	0	0
+25	0	0	0
+25	0	0	0
+25	0	0	0
+25	0	0	0.002
+25	23	0.016728842123	0
+25	23	0.016728842123	0
+25	23	0.016728842123	0.002
+25	24	0.016728842123	0
+25	24	0.016728842123	0.1
+25	29	0.016782042123	0.002
+25	29	0.016782042123	0
+25	29	0.016782042123	0.002
+25	29	0.016782042123	0.002
+25	29	0.016782042123	0.002
+25	111	0.339534247199	0
+25	111	0.339534247199	0
+25	111	0.339534247199	0.002
+25	112	0.339534247199	0
+25	112	0.339534247199	0.1
+25	117	0.339587447199	0.002
+25	117	0.339587447199	0
+25	117	0.339587447199	0.002
+25	117	0.339587447199	0.002
+25	117	0.339587447199	0.002
+25	280	0.817556965167	0
+25	280	0.817556965167	0
+25	280	0.817556965167	0.002
+25	281	0.817556965167	0
+25	281	0.817556965167	0.1
+25	286	0.817610165167	0.002
+25	286	0.817610165167	0
+25	286	0.817610165167	0.002
+25	286	0.817610165167	0.002
+25	286	0.817610165167	0.002
+25	511	1.458460250372	0
+25	511	1.458460250372	0
+25	511	1.458460250372	0.002
+25	512	1.458460250372	0
+25	512	1.458460250372	0.1
+25	517	1.458513450372	0.002
+25	517	1.458513450372	0
+25	517	1.458513450372	0.002
+25	517	1.458513450372	0.002
+25	517	1.458513450372	0.002
+26	0	0	0
+26	0	0	0
+26	0	0	0
+26	0	0	0
+26	0	0	0.002
+27	0	0	0
+27	0	0	0
+27	0	0	0
+27	0	0	0
+27	0	0	0.002
+28	0	0	0
+28	0	0	0
+28	0	0	0
+28	0	0	0
+28	0	0	0.002
+28	25	0.016729375738	0
+28	25	0.016729375738	0.01
+28	30	0.016782575738	0.002
+28	113	0.339534774161	0.01
+28	118	0.339587974161	0.002
+28	282	0.817557482533	0.01
+28	287	0.817610682533	0.002
+28	513	1.458460755375	0.01
+28	518	1.458513955375	0.002
+29	0	0	0
+29	0	0	0
+29	0	0	0
+29	0	0	0
+29	0	0	0.002
+30	0	0	0
+30	0	0	0
+30	0	0	2
+30	23	0.016728842123	3
+30	29	0.016782042123	2
+30	111	0.339534247199	3
+30	117	0.339587447199	2
+30	280	0.817556965167	3
+30	286	0.817610165167	2
+30	511	1.458460250372	3
+30	517	1.458513450372	2
+31	0	0	0
+31	0	0	0
+31	0	0	0
+31	0	0	0.002
+31	23	0.016728842123	0
+31	23	0.016728842123	0
+31	23	0.016728842123	0.002
+31	24	0.016728842123	0
+31	24	0.016728842123	0.1
+31	29	0.016782042123	0.002
+31	29	0.016782042123	0
+31	29	0.016782042123	0.002
+31	29	0.016782042123	0.002
+31	29	0.016782042123	0.002
+31	111	0.339534247199	0
+31	111	0.339534247199	0
+31	111	0.339534247199	0.002
+31	112	0.339534247199	0
+31	112	0.339534247199	0.1
+31	117	0.339587447199	0.002
+31	117	0.339587447199	0
+31	117	0.339587447199	0.002
+31	117	0.339587447199	0.002
+31	117	0.339587447199	0.002
+31	280	0.817556965167	0
+31	280	0.817556965167	0
+31	280	0.817556965167	0.002
+31	281	0.817556965167	0
+31	281	0.817556965167	0.1
+31	286	0.817610165167	0.002
+31	286	0.817610165167	0
+31	286	0.817610165167	0.002
+31	286	0.817610165167	0.002
+31	286	0.817610165167	0.002
+31	511	1.458460250372	0
+31	511	1.458460250372	0
+31	511	1.458460250372	0.002
+31	512	1.458460250372	0
+31	512	1.458460250372	0.1
+31	517	1.458513450372	0.002
+31	517	1.458513450372	0
+31	517	1.458513450372	0.002
+31	517	1.458513450372	0.002
+31	517	1.458513450372	0.002
+32	0	0	0
+32	0	0	0
+32	0	0	2
+33	0	0	0
+33	0	0	0
+33	0	0	0
+33	0	0	0.002
+34	0	0	0
+34	0	0	0
+34	0	0	2
+35	0	0	0
+35	0	0	0
+35	0	0	0
+35	0	0	0.002
+36	0	0	0
+36	0	0	0
+36	0	0	2
+37	0	0	0
+37	0	0	0
+37	0	0	0
+37	0	0	0.002
+37	25	0.016729375738	0
+37	25	0.016729375738	0.01
+37	30	0.016782575738	0.002
+37	113	0.339534774161	0.01
+37	118	0.339587974161	0.002
+37	282	0.817557482533	0.01
+37	287	0.817610682533	0.002
+37	513	1.458460755375	0.01
+37	518	1.458513955375	0.002
+38	0	0	0
+38	0	0	0
+38	0	0	2
+39	0	0	0
+39	0	0	0
+39	0	0	0
+39	0	0	0.002
+40	0	0	1
+40	23	0.016728842123	0
+40	29	0.016782042123	1
+40	111	0.339534247199	0
+40	117	0.339587447199	1
+40	280	0.817556965167	0
+40	286	0.817610165167	1
+40	511	1.458460250372	0
+40	517	1.458513450372	1
+41	0	0	1
+42	0	0	1
+43	0	0	1
+43	25	0.016729375738	3
+43	30	0.016782575738	1
+43	113	0.339534774161	3
+43	118	0.339587974161	1
+43	282	0.817557482533	3
+43	287	0.817610682533	1
+43	513	1.458460755375	3
+43	518	1.458513955375	1
+44	0	0	1
+45	14	0.015071169097	500
+45	35	0.02197739946	500
+45	39	0.061756346819	500
+45	42	0.067559572078	500
+45	45	0.086386325489	500
+45	48	0.095418414849	500
+45	54	0.105491609084	500
+45	57	0.136670658114	500
+45	60	0.13755488238	500
+45	63	0.138648814693	500
+45	66	0.138893921754	500
+45	69	0.160343773715	500
+45	72	0.178413184819	500
+45	78	0.202896955914	500
+45	81	0.249039618344	500
+45	84	0.268302493029	500
+45	87	0.275729646545	500
+45	90	0.293928078233	500
+45	93	0.295438571146	500
+45	99	0.307695753638	500
+45	102	0.309552509804	500
+45	123	0.34428555554	500
+45	127	0.350712344183	500
+45	130	0.354399708409	500
+45	133	0.372258766318	500
+45	136	0.379567755396	500
+45	139	0.389651771863	500
+45	142	0.389879394693	500
+45	148	0.401415965962	500
+45	151	0.412779926088	500
+45	154	0.424294501816	500
+45	157	0.458829482071	500
+45	160	0.472571149527	500
+45	163	0.477917371468	500
+45	166	0.484811760349	500
+45	169	0.499165053942	500
+45	172	0.499910437428	500
+45	178	0.513097387039	500
+45	181	0.526424556387	500
+45	184	0.52925903686	500
+45	187	0.530915381121	500
+45	190	0.535462924692	500
+45	193	0.540888149415	500
+45	196	0.551021282937	500
+45	199	0.557949174667	500
+45	205	0.611403136821	500
+45	208	0.612694758119	500
+45	211	0.615506376344	500
+45	214	0.617617338889	500
+45	217	0.63032225147	500
+45	220	0.633827217869	500
+45	223	0.641362516841	500
+45	226	0.644725840943	500
+45	229	0.646803370417	500
+45	232	0.648206835335	500
+45	235	0.661023701701	500
+45	238	0.662808248932	500
+45	241	0.66543481609	500
+45	244	0.670954983583	500
+45	247	0.691598963476	500
+45	250	0.692824702054	500
+45	256	0.714662529085	500
+45	259	0.715874946389	500
+45	262	0.760863323904	500
+45	265	0.768451363061	500
+45	271	0.813594490475	500
+45	292	0.824736232438	500
+45	295	0.825215948027	500
+45	299	0.829204870919	500
+45	302	0.830741552103	500
+45	305	0.834955665176	500
+45	308	0.836472328813	500
+45	311	0.841064740199	500
+45	314	0.847483352708	500
+45	317	0.848278921526	500
+45	320	0.862429195851	500
+45	323	0.872462366235	500
+45	326	0.876163344316	500
+45	329	0.885052451721	500
+45	332	0.886236255422	500
+45	335	0.896531003115	500
+45	341	0.928322074259	500
+45	344	0.932924796828	500
+45	347	0.946134947749	500
+45	350	0.947830916312	500
+45	353	0.962950122033	500
+45	356	0.967049972037	500
+45	359	0.9694781773	500
+45	362	0.980075725804	500
+45	365	0.98031947531	500
+45	376	1.001508368179	500
+45	379	1.001564846665	500
+45	382	1.015156456369	500
+45	385	1.018933116299	500
+45	388	1.034878210784	500
+45	391	1.074179928917	500
+45	394	1.077612180587	500
+45	397	1.087912896201	500
+45	400	1.09867198665	500
+45	406	1.108862636389	500
+45	409	1.111891676304	500
+45	412	1.148519056187	500
+45	415	1.155630544516	500
+45	418	1.178112063074	500
+45	421	1.192538925881	500
+45	424	1.19677516748	500
+45	430	1.216946233935	500
+45	433	1.223006458908	500
+45	436	1.248560451661	500
+45	439	1.259006881577	500
+45	442	1.284624846977	500
+45	445	1.298777442181	500
+45	451	1.314280353407	500
+45	454	1.322629946938	500
+45	457	1.36013556723	500
+45	460	1.372529131358	500
+45	463	1.37914588324	500
+45	466	1.390334717805	500
+45	469	1.390567275181	500
+45	472	1.394874401771	500
+45	478	1.407826244155	500
+45	481	1.411937439651	500
+45	484	1.42348594032	500
+45	487	1.430205473161	500
+45	490	1.431952360902	500
+45	493	1.436203050489	500
+45	496	1.44632971216	500
+45	500	1.4570544611	500
+45	503	1.45746490212	500
+45	524	1.499135327871	500
+45	530	1.505910653884	500
+45	533	1.533134261796	500
+45	536	1.538632336403	500
+45	539	1.54550187502	500
+45	542	1.572200850907	500
+45	545	1.591891621842	500
+45	551	1.606495855786	500
+45	554	1.60776320751	500
+45	557	1.637994593071	500
+45	560	1.65302588337	500
+45	566	1.734210569609	500
+45	569	1.73615301065	500
+45	572	1.760463916455	500
+45	575	1.762591823357	500
+45	578	1.774063420444	500
+45	581	1.775649624959	500
+45	584	1.798256771598	500
+45	590	1.818017400814	500
+45	593	1.828119972355	500
+45	596	1.834394412716	500
+45	599	1.835254517328	500
+45	602	1.849599780123	500
+45	605	1.856851368985	500
+45	608	1.872215379431	500
+45	611	1.896368652265	500
+45	617	1.940888179368	500
+45	620	1.964127106218	500
+45	623	1.964268505001	500
+45	626	1.969623538847	500
+45	629	1.985335119215	500
+45	632	1.987594658918	500
+45	635	1.996428232118	500
+45	638	1.997098672753	500
+45	641	1.99977634325	500
+45	652	2.000000688895	500
+45	655	2.01894164156	500
+45	658	2.021983710022	500
+45	661	2.027067595238	500
+45	664	2.058654221589	500
+45	667	2.073279783229	500
+45	670	2.073668064885	500
+45	673	2.075827552984	500
+45	676	2.087485338881	500
+45	679	2.097816422521	500
+45	685	2.101076439365	500
+45	688	2.133732618436	500
+45	691	2.145154574927	500
+45	694	2.154359530782	500
+45	697	2.165056073705	500
+45	700	2.180773498161	500
+45	703	2.185260136112	500
+45	706	2.191354517584	500
+45	709	2.194180812465	500
+45	712	2.196653197047	500
+45	718	2.23132210415	500
+45	721	2.247466273349	500
+45	724	2.255557208185	500
+45	727	2.258653361352	500
+45	730	2.262175453175	500
+45	733	2.26289282473	500
+45	736	2.269731595514	500
+45	739	2.274215633047	500
+45	742	2.288517930291	500
+45	745	2.294210925775	500
+45	748	2.296586538599	500
+45	751	2.296886398839	500
+45	754	2.297721810892	500
+45	760	2.311372272958	500
+45	763	2.318627247578	500
+45	766	2.327856685191	500
+45	769	2.35509476538	500
+45	775	2.410770595696	500
+45	778	2.413704487961	500
+45	781	2.426759341164	500
+45	784	2.430426599986	500
+45	787	2.430677006609	500
+45	790	2.447721608076	500
+45	793	2.452349860405	500
+45	796	2.458153521055	500
+45	799	2.468803544197	500
+45	802	2.490141264239	500
+45	808	2.502039315754	500
+45	811	2.526769170645	500
+45	814	2.530604066503	500
+45	817	2.549800699805	500
+45	820	2.55226487303	500
+45	823	2.588903089065	500
+45	829	2.602860448466	500
+45	832	2.60577307039	500
+45	835	2.641106833719	500
+45	838	2.656856929635	500
+45	841	2.660372347137	500
+45	844	2.66325142937	500
+45	847	2.672014161353	500
+45	850	2.672326134295	500
+45	853	2.675116434516	500
+45	856	2.681750494964	500
+45	859	2.687374612676	500
+45	862	2.694848564393	500
+45	865	2.698751156609	500
+45	871	2.709356584481	500
+45	874	2.733285054896	500
+45	877	2.734785445975	500
+45	880	2.743527732088	500
+46	16	0.015071169097	508
+46	19	0.016558842123	32
+46	36	0.02197739946	508
+46	40	0.061756346819	508
+46	43	0.067559572078	508
+46	46	0.086386325489	508
+46	49	0.095418414849	508
+46	55	0.105491609084	508
+46	58	0.136670658114	508
+46	61	0.13755488238	508
+46	64	0.138648814693	508
+46	67	0.138893921754	508
+46	70	0.160343773715	508
+46	73	0.178413184819	508
+46	79	0.202896955914	508
+46	82	0.249039618344	508
+46	85	0.268302493029	508
+46	88	0.275729646545	508
+46	91	0.293928078233	508
+46	94	0.295438571146	508
+46	100	0.307695753638	508
+46	103	0.309552509804	508
+46	107	0.338864247199	32
+46	124	0.34428555554	508
+46	128	0.350712344183	508
+46	131	0.354399708409	508
+46	134	0.372258766318	508
+46	137	0.379567755396	508
+46	140	0.389651771863	508
+46	143	0.389879394693	508
+46	149	0.401415965962	508
+46	152	0.412779926088	508
+46	155	0.424294501816	508
+46	158	0.458829482071	508
+46	161	0.472571149527	508
+46	164	0.477917371468	508
+46	167	0.484811760349	508
+46	170	0.499165053942	508
+46	173	0.499910437428	508
+46	179	0.513097387039	508
+46	182	0.526424556387	508
+46	185	0.52925903686	508
+46	188	0.530915381121	508
+46	191	0.535462924692	508
+46	194	0.540888149415	508
+46	197	0.551021282937	508
+46	200	0.557949174667	508
+46	206	0.611403136821	508
+46	209	0.612694758119	508
+46	212	0.615506376344	508
+46	215	0.617617338889	508
+46	218	0.63032225147	508
+46	221	0.633827217869	508
+46	224	0.641362516841	508
+46	227	0.644725840943	508
+46	230	0.646803370417	508
+46	233	0.648206835335	508
+46	236	0.661023701701	508
+46	239	0.662808248932	508
+46	242	0.66543481609	508
+46	245	0.670954983583	508
+46	248	0.691598963476	508
+46	251	0.692824702054	508
+46	257	0.714662529085	508
+46	260	0.715874946389	508
+46	263	0.760863323904	508
+46	266	0.768451363061	508
+46	272	0.813594490475	508
+46	276	0.817326965167	32
+46	293	0.824736232438	508
+46	296	0.825215948027	508
+46	300	0.829204870919	508
+46	303	0.830741552103	508
+46	306	0.834955665176	508
+46	309	0.836472328813	508
+46	312	0.841064740199	508
+46	315	0.847483352708	508
+46	318	0.848278921526	508
+46	321	0.862429195851	508
+46	324	0.872462366235	508
+46	327	0.876163344316	508
+46	330	0.885052451721	508
+46	333	0.886236255422	508
+46	336	0.896531003115	508
+46	342	0.928322074259	508
+46	345	0.932924796828	508
+46	348	0.946134947749	508
+46	351	0.947830916312	508
+46	354	0.962950122033	508
+46	357	0.967049972037	508
+46	360	0.9694781773	508
+46	363	0.980075725804	508
+46	366	0.98031947531	508
+46	377	1.001508368179	508
+46	380	1.001564846665	508
+46	383	1.015156456369	508
+46	386	1.018933116299	508
+46	389	1.034878210784	508
+46	392	1.074179928917	508
+46	395	1.077612180587	508
+46	398	1.087912896201	508
+46	401	1.09867198665	508
+46	407	1.108862636389	508
+46	410	1.111891676304	508
+46	413	1.148519056187	508
+46	416	1.155630544516	508
+46	419	1.178112063074	508
+46	422	1.192538925881	508
+46	425	1.19677516748	508
+46	431	1.216946233935	508
+46	434	1.223006458908	508
+46	437	1.248560451661	508
+46	440	1.259006881577	508
+46	443	1.284624846977	508
+46	446	1.298777442181	508
+46	452	1.314280353407	508
+46	455	1.322629946938	508
+46	458	1.36013556723	508
+46	461	1.372529131358	508
+46	464	1.37914588324	508
+46	467	1.390334717805	508
+46	470	1.390567275181	508
+46	473	1.394874401771	508
+46	479	1.407826244155	508
+46	482	1.411937439651	508
+46	485	1.42348594032	508
+46	488	1.430205473161	508
+46	491	1.431952360902	508
+46	494	1.436203050489	508
+46	497	1.44632971216	508
+46	501	1.4570544611	508
+46	504	1.45746490212	508
+46	507	1.457830250372	32
+46	525	1.499135327871	508
+46	531	1.505910653884	508
+46	534	1.533134261796	508
+46	537	1.538632336403	508
+46	540	1.54550187502	508
+46	543	1.572200850907	508
+46	546	1.591891621842	508
+46	552	1.606495855786	508
+46	555	1.60776320751	508
+46	558	1.637994593071	508
+46	561	1.65302588337	508
+46	567	1.734210569609	508
+46	570	1.73615301065	508
+46	573	1.760463916455	508
+46	576	1.762591823357	508
+46	579	1.774063420444	508
+46	582	1.775649624959	508
+46	585	1.798256771598	508
+46	591	1.818017400814	508
+46	594	1.828119972355	508
+46	597	1.834394412716	508
+46	600	1.835254517328	508
+46	603	1.849599780123	508
+46	606	1.856851368985	508
+46	609	1.872215379431	508
+46	612	1.896368652265	508
+46	618	1.940888179368	508
+46	621	1.964127106218	508
+46	624	1.964268505001	508
+46	627	1.969623538847	508
+46	630	1.985335119215	508
+46	633	1.987594658918	508
+46	636	1.996428232118	508
+46	639	1.997098672753	508
+46	642	1.99977634325	508
+46	653	2.000000688895	508
+46	656	2.01894164156	508
+46	659	2.021983710022	508
+46	662	2.027067595238	508
+46	665	2.058654221589	508
+46	668	2.073279783229	508
+46	671	2.073668064885	508
+46	674	2.075827552984	508
+46	677	2.087485338881	508
+46	680	2.097816422521	508
+46	686	2.101076439365	508
+46	689	2.133732618436	508
+46	692	2.145154574927	508
+46	695	2.154359530782	508
+46	698	2.165056073705	508
+46	701	2.180773498161	508
+46	704	2.185260136112	508
+46	707	2.191354517584	508
+46	710	2.194180812465	508
+46	713	2.196653197047	508
+46	719	2.23132210415	508
+46	722	2.247466273349	508
+46	725	2.255557208185	508
+46	728	2.258653361352	508
+46	731	2.262175453175	508
+46	734	2.26289282473	508
+46	737	2.269731595514	508
+46	740	2.274215633047	508
+46	743	2.288517930291	508
+46	746	2.294210925775	508
+46	749	2.296586538599	508
+46	752	2.296886398839	508
+46	755	2.297721810892	508
+46	761	2.311372272958	508
+46	764	2.318627247578	508
+46	767	2.327856685191	508
+46	770	2.35509476538	508
+46	776	2.410770595696	508
+46	779	2.413704487961	508
+46	782	2.426759341164	508
+46	785	2.430426599986	508
+46	788	2.430677006609	508
+46	791	2.447721608076	508
+46	794	2.452349860405	508
+46	797	2.458153521055	508
+46	800	2.468803544197	508
+46	803	2.490141264239	508
+46	809	2.502039315754	508
+46	812	2.526769170645	508
+46	815	2.530604066503	508
+46	818	2.549800699805	508
+46	821	2.55226487303	508
+46	824	2.588903089065	508
+46	830	2.602860448466	508
+46	833	2.60577307039	508
+46	836	2.641106833719	508
+46	839	2.656856929635	508
+46	842	2.660372347137	508
+46	845	2.66325142937	508
+46	848	2.672014161353	508
+46	851	2.672326134295	508
+46	854	2.675116434516	508
+46	857	2.681750494964	508
+46	860	2.687374612676	508
+46	863	2.694848564393	508
+46	866	2.698751156609	508
+46	872	2.709356584481	508
+46	875	2.733285054896	508
+46	878	2.734785445975	508
+46	881	2.743527732088	508
+47	21	0.016558842123	416
+47	109	0.338864247199	416
+47	278	0.817326965167	416
+47	509	1.457830250372	416
+48	21	0.016558842123	0
+48	109	0.338864247199	0
+48	278	0.817326965167	0
+48	509	1.457830250372	0
+49	21	0.016558842123	416
+49	109	0.338864247199	416
+49	278	0.817326965167	416
+49	509	1.457830250372	416
+50	23	0.016728842123	-3.3457684246e-05
+50	29	0.016782042123	-3.8777684246e-05
+50	111	0.339534247199	-0.000684282094398
+50	117	0.339587447199	-0.000689602094398
+50	280	0.817556965167	-0.001645541130334
+50	286	0.817610165167	-0.001650861130334
+50	511	1.458460250372	-0.002932561300744
+50	517	1.458513450372	-0.002937881300744
+51	23	0.016728842123	1
+51	24	0.016728842123	2
+51	29	0.016782042123	1
+51	29	0.016782042123	0
+51	111	0.339534247199	1
+51	112	0.339534247199	2
+51	117	0.339587447199	1
+51	117	0.339587447199	0
+51	280	0.817556965167	1
+51	281	0.817556965167	2
+51	286	0.817610165167	1
+51	286	0.817610165167	0
+51	511	1.458460250372	1
+51	512	1.458460250372	2
+51	517	1.458513450372	1
+51	517	1.458513450372	0
+52	25	0.016729375738	-3.3458751476e-05
+52	30	0.016782575738	-3.3990751476e-05
+52	113	0.339534774161	-0.000679495148322
+52	118	0.339587974161	-0.000680027148322
+52	282	0.817557482533	-0.001635966165066
+52	287	0.817610682533	-0.001636498165066
+52	513	1.458460755375	-0.00291819831075
+52	518	1.458513955375	-0.00291873031075
+53	31	0.016782575738	73
+53	119	0.339587974161	73
+53	288	0.817610682533	73
+53	519	1.458513955375	73
+54	109	0.1	4160
+54	109	0.2	0
+54	109	0.3	0
+54	278	0.4	4160
+54	278	0.5	0
+54	278	0.6	0
+54	278	0.7	0
+54	278	0.8	0
+54	509	0.9	4160
+54	509	1	0
+54	509	1.1	0
+54	509	1.2	0
+54	509	1.3	0
+54	509	1.4	0
+55	109	0.1	4160
+55	109	0.2	0
+55	109	0.3	0
+55	278	0.4	4160
+55	278	0.5	0
+55	278	0.6	0
+55	278	0.7	0
+55	278	0.8	0
+55	509	0.9	4160
+55	509	1	0
+55	509	1.1	0
+55	509	1.2	0
+55	509	1.3	0
+55	509	1.4	0
+vector 56 WirelessB.hostA.app[0] throughput:vector ETV
+attr recordingmode vector
+attr source throughput(packetReceived)
+attr title throughput
+attr unit bps
+vector 57 WirelessB.hostB.wlan[0].queue outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 58 WirelessB.hostB.wlan[0].queue incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 59 WirelessB.hostB.app[0] throughput:vector ETV
+attr recordingmode vector
+attr source throughput(packetReceived)
+attr title throughput
+attr unit bps
+vector 60 WirelessB.hostR1.wlan[0].queue outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 61 WirelessB.hostR1.wlan[0].queue incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 62 WirelessB.hostR2.wlan[0].queue outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 63 WirelessB.hostR2.wlan[0].queue incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 64 WirelessB.hostR3.wlan[0].queue outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 65 WirelessB.hostR3.wlan[0].queue incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+54	881	1.5	4160
+54	881	1.6	0
+54	881	1.7	0
+54	881	1.8	0
+54	881	1.9	0
+54	881	2	0
+54	881	2.1	0
+54	881	2.2	0
+54	881	2.3	0
+54	881	2.4	0
+54	881	2.5	0
+54	881	2.6	0
+54	881	2.7	0
+54	881	2.743527732088	0
+55	881	1.5	4160
+55	881	1.6	0
+55	881	1.7	0
+55	881	1.8	0
+55	881	1.9	0
+55	881	2	0
+55	881	2.1	0
+55	881	2.2	0
+55	881	2.3	0
+55	881	2.4	0
+55	881	2.5	0
+55	881	2.6	0
+55	881	2.7	0
+55	881	2.743527732088	0
+56	881	0.1	0
+56	881	0.2	0
+56	881	0.3	0
+56	881	0.4	0
+56	881	0.5	0
+56	881	0.6	0
+56	881	0.7	0
+56	881	0.8	0
+56	881	0.9	0
+56	881	1	0
+56	881	1.1	0
+56	881	1.2	0
+56	881	1.3	0
+56	881	1.4	0
+56	881	1.5	0
+56	881	1.6	0
+56	881	1.7	0
+56	881	1.8	0
+56	881	1.9	0
+56	881	2	0
+56	881	2.1	0
+56	881	2.2	0
+56	881	2.3	0
+56	881	2.4	0
+56	881	2.5	0
+56	881	2.6	0
+56	881	2.7	0
+56	881	2.743527732088	0
+57	881	0.1	0
+57	881	0.2	0
+57	881	0.3	0
+57	881	0.4	0
+57	881	0.5	0
+57	881	0.6	0
+57	881	0.7	0
+57	881	0.8	0
+57	881	0.9	0
+57	881	1	0
+57	881	1.1	0
+57	881	1.2	0
+57	881	1.3	0
+57	881	1.4	0
+57	881	1.5	0
+57	881	1.6	0
+57	881	1.7	0
+57	881	1.8	0
+57	881	1.9	0
+57	881	2	0
+57	881	2.1	0
+57	881	2.2	0
+57	881	2.3	0
+57	881	2.4	0
+57	881	2.5	0
+57	881	2.6	0
+57	881	2.7	0
+57	881	2.743527732088	0
+58	881	0.1	0
+58	881	0.2	0
+58	881	0.3	0
+58	881	0.4	0
+58	881	0.5	0
+58	881	0.6	0
+58	881	0.7	0
+58	881	0.8	0
+58	881	0.9	0
+58	881	1	0
+58	881	1.1	0
+58	881	1.2	0
+58	881	1.3	0
+58	881	1.4	0
+58	881	1.5	0
+58	881	1.6	0
+58	881	1.7	0
+58	881	1.8	0
+58	881	1.9	0
+58	881	2	0
+58	881	2.1	0
+58	881	2.2	0
+58	881	2.3	0
+58	881	2.4	0
+58	881	2.5	0
+58	881	2.6	0
+58	881	2.7	0
+58	881	2.743527732088	0
+59	881	0.1	0
+59	881	0.2	0
+59	881	0.3	0
+59	881	0.4	0
+59	881	0.5	0
+59	881	0.6	0
+59	881	0.7	0
+59	881	0.8	0
+59	881	0.9	0
+59	881	1	0
+59	881	1.1	0
+59	881	1.2	0
+59	881	1.3	0
+59	881	1.4	0
+59	881	1.5	0
+59	881	1.6	0
+59	881	1.7	0
+59	881	1.8	0
+59	881	1.9	0
+59	881	2	0
+59	881	2.1	0
+59	881	2.2	0
+59	881	2.3	0
+59	881	2.4	0
+59	881	2.5	0
+59	881	2.6	0
+59	881	2.7	0
+59	881	2.743527732088	0
+60	881	0.1	0
+60	881	0.2	0
+60	881	0.3	0
+60	881	0.4	0
+60	881	0.5	0
+60	881	0.6	0
+60	881	0.7	0
+60	881	0.8	0
+60	881	0.9	0
+60	881	1	0
+60	881	1.1	0
+60	881	1.2	0
+60	881	1.3	0
+60	881	1.4	0
+60	881	1.5	0
+60	881	1.6	0
+60	881	1.7	0
+60	881	1.8	0
+60	881	1.9	0
+60	881	2	0
+60	881	2.1	0
+60	881	2.2	0
+60	881	2.3	0
+60	881	2.4	0
+60	881	2.5	0
+60	881	2.6	0
+60	881	2.7	0
+60	881	2.743527732088	0
+61	881	0.1	0
+61	881	0.2	0
+61	881	0.3	0
+61	881	0.4	0
+61	881	0.5	0
+61	881	0.6	0
+61	881	0.7	0
+61	881	0.8	0
+61	881	0.9	0
+61	881	1	0
+61	881	1.1	0
+61	881	1.2	0
+61	881	1.3	0
+61	881	1.4	0
+61	881	1.5	0
+61	881	1.6	0
+61	881	1.7	0
+61	881	1.8	0
+61	881	1.9	0
+61	881	2	0
+61	881	2.1	0
+61	881	2.2	0
+61	881	2.3	0
+61	881	2.4	0
+61	881	2.5	0
+61	881	2.6	0
+61	881	2.7	0
+61	881	2.743527732088	0
+62	881	0.1	0
+62	881	0.2	0
+62	881	0.3	0
+62	881	0.4	0
+62	881	0.5	0
+62	881	0.6	0
+62	881	0.7	0
+62	881	0.8	0
+62	881	0.9	0
+62	881	1	0
+62	881	1.1	0
+62	881	1.2	0
+62	881	1.3	0
+62	881	1.4	0
+62	881	1.5	0
+62	881	1.6	0
+62	881	1.7	0
+62	881	1.8	0
+62	881	1.9	0
+62	881	2	0
+62	881	2.1	0
+62	881	2.2	0
+62	881	2.3	0
+62	881	2.4	0
+62	881	2.5	0
+62	881	2.6	0
+62	881	2.7	0
+62	881	2.743527732088	0
+63	881	0.1	0
+63	881	0.2	0
+63	881	0.3	0
+63	881	0.4	0
+63	881	0.5	0
+63	881	0.6	0
+63	881	0.7	0
+63	881	0.8	0
+63	881	0.9	0
+63	881	1	0
+63	881	1.1	0
+63	881	1.2	0
+63	881	1.3	0
+63	881	1.4	0
+63	881	1.5	0
+63	881	1.6	0
+63	881	1.7	0
+63	881	1.8	0
+63	881	1.9	0
+63	881	2	0
+63	881	2.1	0
+63	881	2.2	0
+63	881	2.3	0
+63	881	2.4	0
+63	881	2.5	0
+63	881	2.6	0
+63	881	2.7	0
+63	881	2.743527732088	0
+64	881	0.1	0
+64	881	0.2	0
+64	881	0.3	0
+64	881	0.4	0
+64	881	0.5	0
+64	881	0.6	0
+64	881	0.7	0
+64	881	0.8	0
+64	881	0.9	0
+64	881	1	0
+64	881	1.1	0
+64	881	1.2	0
+64	881	1.3	0
+64	881	1.4	0
+64	881	1.5	0
+64	881	1.6	0
+64	881	1.7	0
+64	881	1.8	0
+64	881	1.9	0
+64	881	2	0
+64	881	2.1	0
+64	881	2.2	0
+64	881	2.3	0
+64	881	2.4	0
+64	881	2.5	0
+64	881	2.6	0
+64	881	2.7	0
+64	881	2.743527732088	0
+65	881	0.1	0
+65	881	0.2	0
+65	881	0.3	0
+65	881	0.4	0
+65	881	0.5	0
+65	881	0.6	0
+65	881	0.7	0
+65	881	0.8	0
+65	881	0.9	0
+65	881	1	0
+65	881	1.1	0
+65	881	1.2	0
+65	881	1.3	0
+65	881	1.4	0
+65	881	1.5	0
+65	881	1.6	0
+65	881	1.7	0
+65	881	1.8	0
+65	881	1.9	0
+65	881	2	0
+65	881	2.1	0
+65	881	2.2	0
+65	881	2.3	0
+65	881	2.4	0
+65	881	2.5	0
+65	881	2.6	0
+65	881	2.7	0
+65	881	2.743527732088	0
+

@@ -1,0 +1,57 @@
+version 3
+run lab2-0-20241111-23:28:40-8076
+attr configname lab2
+attr datetime 20241111-23:28:40
+attr datetimef 20241111-232840
+attr experiment lab2
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsd ""
+attr iterationvarsf ""
+attr measurement ""
+attr network DRn
+attr processid 8076
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+config image-path ../inet4.5/images
+config network DRn
+config *.host[*].ipv4.route aodv
+config *.host[*].ipAddress "\"10.0.0.x\""
+config *.host[0].app[0].typename UdpBasicApp
+config *.host[0].app[0].destAddress "\"10.0.0.1\""
+config *.host[0].app[0].packetLength 512
+config *.host[0].failures "\"nodeFailure\""
+config *.host[*].app[0].priority 1
+config *.host[*].app[0].queueType "\"PriorityQueue\""
+config *.host[*].app[0].monitoring true
+config *.host[*].monitoring.latency true
+config *.host[*].monitoring.throughput true
+
+vector 0 DRn.host[0].ppp[0].queue queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
+attr title "queue length"
+attr unit pk
+vector 1 DRn.host[0].ppp[0].queue queueBitLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
+attr title "queue bit length"
+attr unit b
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+1	0	0	0
+1	0	0	0
+1	0	0	0
+1	0	0	0
+1	0	0	0
+
