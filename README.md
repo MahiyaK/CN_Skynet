@@ -17,9 +17,7 @@ This project mainly revolves around the following key files:
 
 These files form the backbone of the simulation, and understanding their structure and interactions is key to navigating the project and customizing it for further experiments or enhancements.
 
---- 
 
-Let me know if you need any further adjustments!
 ## **Overview**
 
 This project focuses on implementing and analyzing a **disaster-resilient communication network** using **OMNeT++** and the **INET Framework**. The primary goal is to ensure communication continuity during disruptions caused by disaster scenarios.  
