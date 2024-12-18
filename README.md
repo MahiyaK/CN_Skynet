@@ -1,5 +1,25 @@
 # **Disaster-Resilient Communication Network Simulation**
 
+---
+
+## **Project Navigation Manual**
+
+This project mainly revolves around the following key files:
+
+1. **aodv.ned**  
+   - Contains the module definition for the AODV (Ad hoc On-Demand Distance Vector) routing protocol, essential for simulating dynamic routing decisions under disaster scenarios.
+
+2. **networkk.ned**  
+   - Defines the network topology and node configurations. This file is crucial for setting up the structure of the communication network, including nodes and their connections.
+
+3. **omnetpp.ini**  
+   - The configuration file where simulation parameters, such as traffic patterns, node behaviors, and failure scenarios, are defined. It controls the overall simulation setup.
+
+These files form the backbone of the simulation, and understanding their structure and interactions is key to navigating the project and customizing it for further experiments or enhancements.
+
+--- 
+
+Let me know if you need any further adjustments!
 ## **Overview**
 
 This project focuses on implementing and analyzing a **disaster-resilient communication network** using **OMNeT++** and the **INET Framework**. The primary goal is to ensure communication continuity during disruptions caused by disaster scenarios.  
